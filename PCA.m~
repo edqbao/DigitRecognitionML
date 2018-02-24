@@ -1,0 +1,15 @@
+filename = "/Users/kat/Desktop/Kaggle/Graph.csv";
+graph_data = csvread(filename);
+adj_mtx = zeros(6000,6000);
+for i = 1:1:length(graph_data)
+     adj_mtx(graph_data(i,1), graph_data(i,2)) = 1;
+     adj_mtx(graph_data(i,2), graph_data(i,1)) = 1;
+end
+
+Sigma = cov(adj_mtx);
+Mu = mean(adj_mtx);
+K = 5000;
+[W,E] = eigs(Sigma, K);
+Y = (adj_mtx-repmat(Mu,[6000,1]))*W;
+Xhat = Y*W' + repmat(Mu,[6000,1]);
+csvwrite(filename,M)
